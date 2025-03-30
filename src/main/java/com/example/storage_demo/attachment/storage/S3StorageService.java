@@ -5,13 +5,17 @@ import java.io.InputStream;
 import java.net.URL;
 import java.time.Duration;
 import java.util.Date;
-import java.util.UUID;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
+@Service
+@Profile({ "prod", "staging" })
 public class S3StorageService implements StorageService {
     private final AmazonS3 s3Client;
     private final String bucket;
@@ -23,7 +27,7 @@ public class S3StorageService implements StorageService {
 
     @Override
     public String storeFile(InputStream inputStream, String contentType, String filename) throws IOException {
-        String key = UUID.randomUUID() + "-" + filename;
+        String key = this.generateKey(filename);
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
 
