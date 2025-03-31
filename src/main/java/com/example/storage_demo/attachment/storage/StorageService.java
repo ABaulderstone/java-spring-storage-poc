@@ -6,13 +6,14 @@ import java.time.Duration;
 import java.util.UUID;
 
 public interface StorageService {
-    String storeFile(InputStream inputStream, String contentType, String filename) throws IOException;
+    String storeFile(InputStream inputStream, String contentType, KeyDetails details) throws IOException;
 
     String generatePresignedUrl(String key, Duration expiration);
 
     void deleteFile(String key) throws IOException;
 
-    default String generateKey(String filename) {
-        return UUID.randomUUID() + "-" + filename;
+    default String generateKey(KeyDetails details) {
+        return String.format("%s/%s/%s-%s", details.getEntityName(), details.getEntityId(), UUID.randomUUID(),
+                details.getFilename());
     }
 }

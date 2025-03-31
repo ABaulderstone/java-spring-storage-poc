@@ -28,10 +28,13 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public String storeFile(InputStream inputStream, String contentType, String filename) throws IOException {
-        String key = this.generateKey(filename);
-        Path targePath = storageLocation.resolve(key);
-        Files.copy(inputStream, targePath, StandardCopyOption.REPLACE_EXISTING);
+    public String storeFile(InputStream inputStream, String contentType, KeyDetails details) throws IOException {
+        String key = this.generateKey(details);
+        Path targetPath = storageLocation.resolve(key);
+        // add entity and id folder
+        Files.createDirectories(targetPath.getParent());
+
+        Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
         return key;
     }
