@@ -26,8 +26,8 @@ public class S3StorageService implements StorageService {
     }
 
     @Override
-    public String storeFile(InputStream inputStream, String contentType, String filename) throws IOException {
-        String key = this.generateKey(filename);
+    public String storeFile(InputStream inputStream, String contentType, KeyDetails details) throws IOException {
+        String key = this.generateKey(details);
         ObjectMetadata metadata = new ObjectMetadata();
         metadata.setContentType(contentType);
 

@@ -2,6 +2,8 @@ package com.example.storage_demo.attachment;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
+import java.time.Duration;
 
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,14 @@ public class AttachmentService {
         this.repo.save(newAttachment);
         return newAttachment;
 
+    }
+
+    public Optional<String> getAttachmentUrl(Long attachmentId) {
+        Optional<Attachment> result = this.repo.findById(attachmentId);
+        if (result.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(this.storageService.generatePresignedUrl(result.get().getKey(), Duration.ofMinutes(60L)));
     }
 
 }
