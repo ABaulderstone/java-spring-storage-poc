@@ -7,17 +7,22 @@ import java.time.Duration;
 
 import org.springframework.stereotype.Service;
 
+import com.example.storage_demo.attachment.entity_attachment.EntityAttachmentService;
 import com.example.storage_demo.attachment.storage.KeyDetails;
 import com.example.storage_demo.attachment.storage.StorageService;
 
 @Service
 public class AttachmentService {
+
+    private final EntityAttachmentService entityAttachmentService;
     private final AttachmentRepository repo;
     private final StorageService storageService;
 
-    public AttachmentService(AttachmentRepository repo, StorageService storageService) {
+    public AttachmentService(AttachmentRepository repo, StorageService storageService,
+            EntityAttachmentService entityAttachmentService) {
         this.repo = repo;
         this.storageService = storageService;
+        this.entityAttachmentService = entityAttachmentService;
     }
 
     public Attachment createAttachment(InputStream file, String contentType, KeyDetails details) throws IOException {
@@ -25,6 +30,7 @@ public class AttachmentService {
         Attachment newAttachment = new Attachment();
         newAttachment.setKey(key);
         newAttachment.setOriginalFilename(details.getFilename());
+        entityAttachmentService.create(newAttachment, details);
         this.repo.save(newAttachment);
         return newAttachment;
 
