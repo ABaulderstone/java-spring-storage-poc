@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/files")
@@ -33,7 +32,7 @@ public class LocalFileController {
                 return ResponseEntity.badRequest().build();
             }
 
-            var resource = new UrlResource(filePath.toUri());
+            UrlResource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 String contentType = Files.probeContentType(filePath);
                 if (contentType == null) {

@@ -3,6 +3,11 @@ package com.example.storage_demo.attachment;
 import com.example.storage_demo.common.BaseEntity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity()
+@Table(name = "attachments")
 
 public class Attachment extends BaseEntity {
 

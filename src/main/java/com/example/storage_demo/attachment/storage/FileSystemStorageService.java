@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,8 @@ public class FileSystemStorageService implements StorageService {
     private final Path storageLocation;
     private final String baseUrl;
 
-    public FileSystemStorageService(String storageDir, String baseUrl) {
+    public FileSystemStorageService(@Value("${app.storage.local-dir:./temp-storage}") String storageDir,
+            @Value("${app.storage.base-url:http://localhost:8080/api/files}") String baseUrl) {
         this.baseUrl = baseUrl;
         this.storageLocation = Paths.get(storageDir);
         try {

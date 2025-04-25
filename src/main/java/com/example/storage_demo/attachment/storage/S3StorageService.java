@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class S3StorageService implements StorageService {
     private final AmazonS3 s3Client;
     private final String bucket;
 
-    public S3StorageService(AmazonS3 s3Client, String bucket) {
+    public S3StorageService(AmazonS3 s3Client, @Value("${aws.s3.bucket}") String bucket) {
         this.s3Client = s3Client;
         this.bucket = bucket;
     }
