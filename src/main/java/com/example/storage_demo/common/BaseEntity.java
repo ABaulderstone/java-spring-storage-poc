@@ -54,7 +54,7 @@ public abstract class BaseEntity {
 
     public KeyDetails generateKeyDetails(String filename) {
         KeyDetails details = new KeyDetails();
-        details.setEntityName(this.getClass().getName());
+        details.setEntityName(this.getClass().getSimpleName());
         details.setEntityId(id);
         details.setFilename(filename);
         return details;
