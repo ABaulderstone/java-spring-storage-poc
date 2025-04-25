@@ -15,9 +15,6 @@ public class Task extends BaseEntity {
     @Column
     private String name;
 
-    @ManyToOne(optional = true)
-    private EntityAttachment attachment;
-
     public Task() {
     }
 
@@ -25,16 +22,8 @@ public class Task extends BaseEntity {
         return name;
     }
 
-    public EntityAttachment getAttachment() {
-        return attachment;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setAttachment(EntityAttachment attachment) {
-        this.attachment = attachment;
     }
 
 }

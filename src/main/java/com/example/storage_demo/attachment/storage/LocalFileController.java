@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.apache.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class LocalFileController {
     private final Path storageLocation;
 
-    public LocalFileController(String storageDir) {
+    public LocalFileController(@Value("${app.storage.local-dir:./temp-storage}") String storageDir) {
         this.storageLocation = Paths.get(storageDir).toAbsolutePath().normalize();
     }
 

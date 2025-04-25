@@ -14,7 +14,7 @@ public class Attachment extends BaseEntity {
     @Column
     String originalFilename;
 
-    @Column
+    @Column(name = "s3_key")
     String key;
 
     public String getOriginalFilename() {
