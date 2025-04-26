@@ -3,6 +3,7 @@ package com.example.storage_demo.common;
 import java.util.Date;
 
 import com.example.storage_demo.attachment.storage.KeyDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -50,6 +51,18 @@ public abstract class BaseEntity {
 
     public Date getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public KeyDetails generateKeyDetails(String filename) {

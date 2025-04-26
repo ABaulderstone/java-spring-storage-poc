@@ -28,12 +28,12 @@ public class Task extends BaseEntity {
     @Where(clause = "entity_type = 'Task'")
     private List<EntityAttachment> entityAttachments;
 
-    @Transient
-    public List<Attachment> getAttachments() {
-        return entityAttachments.stream()
-                .map(EntityAttachment::getAttachment)
-                .collect(Collectors.toList());
-    }
+    // @Transient
+    // public List<Attachment> getAttachments() {
+    // return entityAttachments.stream()
+    // .map(EntityAttachment::getAttachment)
+    // .collect(Collectors.toList());
+    // }
 
     public Task() {
     }
