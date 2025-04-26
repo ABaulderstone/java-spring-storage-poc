@@ -4,10 +4,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,14 @@ public class LocalFileController {
         this.storageLocation = Paths.get(storageDir).toAbsolutePath().normalize();
     }
 
-    @GetMapping("/{filename:.+}")
+    @GetMapping("/{*filename}")
     public ResponseEntity<?> serveFile(@PathVariable String filename) {
         try {
+
+            // IMPORTANT - NORMALISE THE LEADING SLASH OTHERWISE WON'T RESOLVE
+            filename = filename.startsWith("/") ? filename.substring(1) : filename;
             Path filePath = storageLocation.resolve(filename).normalize();
+
             if (!filePath.toAbsolutePath().startsWith(storageLocation)) {
                 return ResponseEntity.badRequest().build();
             }
@@ -45,7 +50,7 @@ public class LocalFileController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
